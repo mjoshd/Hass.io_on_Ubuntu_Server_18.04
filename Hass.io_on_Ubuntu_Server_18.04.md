@@ -68,9 +68,9 @@ Reboot the server to apply the configuration.
 ## Finishing Up
 
 ```text
-Install the community IDE addon.
+Install the community IDE addon
 
-Configure, start, and open the IDE.
+Configure, start, and open the IDE
 
 Use the IDE to upload the snapshot to the "backup" directory
 
@@ -79,7 +79,7 @@ Open Hass.io > Snapshots
 
 Click refresh in upper-right
 
-Click restore backup and tick all boxes (except hass version?)
+Click restore backup and tick all boxes then restore
 
 After it is complete, log in and verify everything is working
 ```
