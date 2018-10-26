@@ -14,7 +14,7 @@ Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
 
 Once logged in to the machine, open a terminal and run the following commands.
 
-```bash
+```text
 # Get a root shell.
 sudo -s
 
