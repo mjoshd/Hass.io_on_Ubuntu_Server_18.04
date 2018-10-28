@@ -81,15 +81,15 @@ sudo reboot now
 
 * Configure, start, and open the chosen addon.
 
-* Use the addon to upload the snapshot to the "backup" directory
+* Use the addon to upload the snapshot to the "backup" directory.
 
-* Open Hass.io > Snapshots
+* Open Hass.io > Snapshots.
 
-* Click the Reload icon in the upper-right corner of the pane
+* Click the Reload icon in the upper-right corner of the pane.
 
-* Click the desired snapshot, ensure all the boxes are filled, then click 'Wipe & Restore'
+* Click the desired snapshot, ensure all the boxes are filled, then click 'Wipe & Restore'.
 
-* After it is complete, log in and verify everything is working
+* After it is complete, log in and verify everything is working.
 
 ## Notes
 
@@ -101,12 +101,12 @@ sudo reboot now
 # Get a root shell.
 sudo -s
 
-# Disable the systemd service from auto-starting
+# Disable the systemd service from auto-starting.
 systemctl disable systemd-resolved.service
 
-# Stop the systemd service
+# Stop the systemd service.
 service systemd-resolved stop
 
-# Reboot the host
+# Reboot the host.
 reboot now
 ```
