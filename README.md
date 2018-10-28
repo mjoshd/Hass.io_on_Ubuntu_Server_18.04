@@ -1,4 +1,4 @@
-# Hass.io on Ubuntu Server 18.04
+# Installing Hass.io on Ubuntu Server 18.04
 
 ## Prerequisites
 
@@ -93,7 +93,7 @@ sudo reboot now
 
 ## Notes
 
-* If using the Samba addon you will need to change the "interface" in the config to match what was used for INTERFACE during the 'Setting up static IP' step.
+* If you install the Samba addon you will need to change the "interface" in the config to match what was used for INTERFACE during the 'Setting up static IP' step.
 
 * If you install the Pi-hole addon and get errors related to 'address is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal:
 
