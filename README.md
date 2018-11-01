@@ -101,11 +101,11 @@ sudo reboot now
 # Get a root shell.
 sudo -s
 
-# Disable the systemd service from auto-starting.
-systemctl disable systemd-resolved.service
+# Open resoved.conf in nano.
+nano /etc/systemd/resolved.conf
 
-# Stop the systemd service.
-service systemd-resolved stop
+# Add the following line.
+DNSStubListener=no
 
 # Reboot the host.
 reboot now
