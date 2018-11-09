@@ -83,7 +83,7 @@ sudo reboot now
 
 * Use the addon to upload the snapshot to the "backup" directory.
 
-* Open Hass.io > Snapshots.
+* Open the side-bar then click Hass.io > Snapshots.
 
 * Click the Reload icon in the upper-right corner of the pane.
 
@@ -92,8 +92,6 @@ sudo reboot now
 * After it is complete, log in and verify everything is working.
 
 ## Notes
-
-* If you install the Samba addon you will need to change the "interface" in the config to match what was used for INTERFACE during the 'Setting up static IP' step.
 
 * If you install the Pi-hole addon and get errors related to 'address is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal:
 
