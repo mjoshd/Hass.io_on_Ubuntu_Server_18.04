@@ -95,7 +95,7 @@ sudo reboot now
 
 * Not too long after issuing the curl command to install Hass.io there will be a notice in the terminal similar to 'trying again after 30 seconds'. Do not worry, this is normal and the process will continue on its own without assistance.
 
-* If you install the Pi-hole addon and get errors related to 'address is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal: 
+* If you install the Pi-hole addon and get errors related to 'address is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal:
 
 ```bash
 # Get a root shell.
