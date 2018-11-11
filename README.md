@@ -68,9 +68,12 @@ network:
         addresses: [GATEWAY_IP,8.8.8.8,9.9.9.9]
 ```
 
-Reboot the server to apply the configuration.
+Apply config and reboot the server.
 
 ```bash
+# Apply the config
+sudo netplan apply
+
 # Reboot the host.
 sudo reboot now
 ```
