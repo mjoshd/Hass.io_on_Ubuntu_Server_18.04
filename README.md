@@ -71,6 +71,11 @@ network:
 Reboot the server to apply the configuration.
 
 ```bash
+# Apply the config
+sudo netplan try
+
+# Press ENTER to accept the changes.
+
 # Reboot the host.
 sudo reboot now
 ```
