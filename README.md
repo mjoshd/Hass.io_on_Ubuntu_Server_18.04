@@ -68,7 +68,7 @@ network:
         addresses: [GATEWAY_IP,8.8.8.8,9.9.9.9]
 ```
 
-Reboot the server to apply the configuration.
+Apply the configuration and reboot the server.
 
 ```bash
 # Apply the config
