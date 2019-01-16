@@ -12,28 +12,31 @@ Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
   * [macOS](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-macos#0)
   * [Ubuntu](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-ubuntu#0)
 
-## Installing Hass.io
+## [Installing Hass.io](https://www.home-assistant.io/hassio/installation/#alternative-install-on-generic-linux-server)
 
 Once logged in to the machine, open a terminal and run the following commands.
 
 ```bash
 # Get a root shell.
-sudo -s
+sudo -i
 
 # Add the universe repository and update.
 add-apt-repository universe && apt-get update
 
-# Install docker.io, avahi-daemon, and jq.
+# Install required packages.
 #   -y switch used to auto-accept, can be ommited if desired.
-apt-get install docker.io avahi-daemon jq -y
+apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
 
-# Update from repository and upgrade existing packages.
+# Install official Docker-CE
+curl -fsSL get.docker.com | sh
+
+# Update from repository again and upgrade existing packages.
 #   -y switch used to auto-accept, can be ommited if desired.
 apt-get update && apt-get upgrade -y
 
 # Download hassio_install script from github, and automatically execute it in a bash shell.
 # You can navigate to this url in a web browser if you'd like to examine the script before running.
-curl -sL https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install | bash
+curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install" | bash -s
 ```
 
 ## Setting up a static IP
@@ -100,17 +103,14 @@ sudo reboot now
 
 * Not too long after issuing the curl command to install Hass.io there will be a notice in the terminal similar to 'trying again after 30 seconds'. Do not worry, this is normal and the process will continue on its own without intervention.
 
-* If you install the Pi-hole addon and get errors related to 'address is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal:
+* If you install either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) and get errors related to 'address/port is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal:
 
 ```bash
 # Get a root shell.
-sudo -s
+sudo -i
 
-# Open resoved.conf in nano.
-nano /etc/systemd/resolved.conf
-
-# Add the following line.
-DNSStubListener=no
+# Disable systemd-resolved.service from auto-starting.
+systemctl disable systemd-resolved.service
 
 # Reboot the host.
 reboot now
