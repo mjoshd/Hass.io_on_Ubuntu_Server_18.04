@@ -4,7 +4,7 @@
 
 Create a snapshot of your current Hass.io installation.
 
-Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
+## Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
 
 * For instructions on how to install Ubuntu Server, [see Canonicals documentation here.](https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server#0)
 * For instructions on how to make a installable USB key, see:
@@ -15,7 +15,7 @@ Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
 
 ## Setting up a static IP
 
-Use this information if you did not set up a static IP during the inital Ubuntu Server installation. 
+It is preferable to set a static IP duirng the OS installation. You can use the information below if you need to create it afterward. 
 
 Determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example provided.
 
@@ -45,9 +45,8 @@ network:
             nameservers:
                 addresses:
                 - GATEWAY_IP
-                - 1.1.1.1
-                - 9.9.9.9
                 - 8.8.8.8
+                - 9.9.9.9
     version: 2
 
 ```
@@ -55,10 +54,8 @@ network:
 Apply the configuration and reboot the server.
 
 ```bash
-# Apply the config
+# Apply the config. Press ENTER again to accept the changes.
 sudo netplan try
-
-# Press ENTER to accept the changes.
 
 # Reboot the host.
 sudo reboot now
@@ -70,25 +67,30 @@ Once logged in to the machine, open a terminal and run the following commands.
 
 ```bash
 # Get a root shell.
-sudo -i
+sudo -s
 
 # Add the universe repository and update.
 add-apt-repository universe && apt-get update
 
-# Install required packages.
+# Install docker.io, avahi-daemon, and jq.
 #   -y switch used to auto-accept, can be ommited if desired.
-apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
+apt-get install docker.io avahi-daemon jq -y
 
-# Install official Docker-CE
-curl -fsSL get.docker.com | sh
+# Create DNS configuration file for Docker.
+nano /etc/docker/daemon.json
 
-# Update from repository again and upgrade existing packages.
+# Enter the following into daemon.json, where GATEWAY_IP is your default gateway, then save.
+{
+    "dns": ["GATEWAY_IP", "8.8.8.8", "9.9.9.9"]
+}
+
+# Update package lists and upgrade existing packages.
 #   -y switch used to auto-accept, can be ommited if desired.
 apt-get update && apt-get upgrade -y
 
 # Download hassio_install script from github, and automatically execute it in a bash shell.
 # You can navigate to this url in a web browser if you'd like to examine the script before running.
-curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install" | bash -s
+curl -sL https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install | bash
 ```
 
 ## Important Note
@@ -97,7 +99,7 @@ If you are going to install either of the DNS Ad-blocking addons (AdGuard Home/P
 
 ```bash
 # Get a root shell.
-sudo -i
+sudo -s
 
 # Disable systemd-resolved.service from auto-starting.
 systemctl disable systemd-resolved.service
