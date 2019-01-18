@@ -12,6 +12,58 @@ Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
   * [macOS](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-macos#0)
   * [Ubuntu](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-ubuntu#0)
 
+
+## Setting up a static IP
+
+Use this information if you did not set up a static IP during the inital Ubuntu Server installation. 
+
+Determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example provided.
+
+```bash
+# Display network interfaces.
+ifconfig
+
+# Open network configuration file for editing.
+sudo nano /etc/netplan/50-cloud-init.yaml
+```
+
+Replace INTERFACE, IP_ADDRESS, CIDR_MASK and GATEWAY_IP with your details.
+
+```yaml
+# This file is generated from information provided by
+# the datasource.  Changes to it will not persist across an instance.
+# To disable cloud-init's network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        INTERFACE:
+            addresses:
+            - IP_ADDRESS/CIDR_MASK
+            dhcp4: false
+            gateway4: GATEWAY_IP
+            nameservers:
+                addresses:
+                - GATEWAY_IP
+                - 1.1.1.1
+                - 9.9.9.9
+                - 8.8.8.8
+    version: 2
+
+```
+
+Apply the configuration and reboot the server.
+
+```bash
+# Apply the config
+sudo netplan try
+
+# Press ENTER to accept the changes.
+
+# Reboot the host.
+sudo reboot now
+```
+
 ## [Installing Hass.io](https://www.home-assistant.io/hassio/installation/#alternative-install-on-generic-linux-server)
 
 Once logged in to the machine, open a terminal and run the following commands.
@@ -39,71 +91,9 @@ apt-get update && apt-get upgrade -y
 curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install" | bash -s
 ```
 
-## Setting up a static IP
+## Important Note
 
-Determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example provided.
-
-```bash
-# Display network interfaces.
-ifconfig
-
-# Open network configuration file for editing.
-sudo nano /etc/netplan/50-cloud-init.yaml
-```
-
-Replace INTERFACE, IP_ADDRESS, CIDR_MASK and GATEWAY_IP with your details.
-
-```yaml
-# This file is generated from information provided by
-# the datasource.  Changes to it will not persist across an instance.
-# To disable cloud-init's network configuration capabilities, write a file
-# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
-# network: {config: disabled}
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    INTERFACE:
-      dhcp4: false
-      addresses: [IP_ADDRESS/CIDR_MASK]
-      gateway4: GATEWAY_IP
-      nameservers:
-        addresses: [GATEWAY_IP,8.8.8.8,9.9.9.9]
-```
-
-Apply the configuration and reboot the server.
-
-```bash
-# Apply the config
-sudo netplan try
-
-# Press ENTER to accept the changes.
-
-# Reboot the host.
-sudo reboot now
-```
-
-## Finishing Up
-
-* Install either the Samba addon or the community IDE addon.
-
-* Configure, start, and open the chosen addon.
-
-* Use the addon to upload the snapshot to the "backup" directory.
-
-* Open the side-bar then click Hass.io > Snapshots.
-
-* Click the Reload icon in the upper-right corner of the pane.
-
-* Click the desired snapshot, ensure all the boxes are filled, then click 'Wipe & Restore'.
-
-* After it is complete, log in and verify everything is working.
-
-## Notes
-
-* Not too long after issuing the curl command to install Hass.io there will be a notice in the terminal similar to 'trying again after 30 seconds'. Do not worry, this is normal and the process will continue on its own without intervention.
-
-* If you install either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) and get errors related to 'address/port is already in use' when trying to start it, run the following commands in the Ubuntu host's terminal:
+If you are going to install either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) you will need to run the following commands in the Ubuntu host's terminal or you will get errors related to 'address/port is already in use' when trying to start it:
 
 ```bash
 # Get a root shell.
@@ -115,3 +105,19 @@ systemctl disable systemd-resolved.service
 # Reboot the host.
 reboot now
 ```
+
+## Finishing Up
+
+* Install either the Samba addon or the community IDE addon.
+
+* Configure, start, and open the chosen addon.
+
+* Use the addon to upload the snapshot to the "backup" directory.
+
+* Open the side-menu then click Hass.io > Snapshots.
+
+* Click the Reload icon in the upper-right corner of the pane.
+
+* Click the desired snapshot, de-select Home Assistant (leave all other items selected), then click 'RESTORE SELECTED'.
+
+* After it is complete, log in and verify everything is working.
