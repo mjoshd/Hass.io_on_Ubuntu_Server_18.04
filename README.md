@@ -120,6 +120,6 @@ reboot now
 
 * Click the Reload icon in the upper-right corner of the pane.
 
-* Click the desired snapshot, de-select Home Assistant (leave all other items selected), then click 'RESTORE SELECTED'.
+* Click the desired snapshot, ensure all boxes are selected, then click 'WIPE & RESTORE'.
 
 * After it is complete, log in and verify everything is working.
