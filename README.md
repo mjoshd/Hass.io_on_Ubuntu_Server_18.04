@@ -12,10 +12,28 @@ Create a snapshot of your current Hass.io installation.
   * [macOS](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-macos#0)
   * [Ubuntu](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-ubuntu#0)
 
+## Set the system timezone
 
-## Setting up a static IP
+```bash
+# Get a root shell.
+sudo -s
 
-It is preferable to set a static IP duirng the OS installation. You can use the information below if you need to create it afterward. 
+# Display timezone list
+timedatectl list-timezones
+
+# Find your timezone in the list
+
+# Apply your timezone settings
+timedatectl set-timezone America/Detroit
+
+# Verify timezone settings
+timedatectl 
+
+```
+
+## Set up a static IP
+
+* It is preferable to set a static IP duirng the OS installation. Use the information below if you need to create it afterward. 
 
 Determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example provided.
 
@@ -25,6 +43,7 @@ ifconfig
 
 # Open network configuration file for editing.
 sudo nano /etc/netplan/50-cloud-init.yaml
+
 ```
 
 Replace INTERFACE, IP_ADDRESS, CIDR_MASK and GATEWAY_IP with your details.
