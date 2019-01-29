@@ -16,7 +16,7 @@ Create 2-3 snapshots of your current Hass.io installation.
 
 ```bash
 # Get a root shell.
-sudo -s
+sudo -i
 
 # Display timezone list and find your timezone in the list.
 timedatectl list-timezones
