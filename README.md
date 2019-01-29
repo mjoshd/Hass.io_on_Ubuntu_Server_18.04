@@ -127,9 +127,9 @@ curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/i
 
 If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) follow these steps in order:
 
-* Install the desired ad-blocking addon and note that after starting it there are errors related to 'address/port is already in use'. This is because Ubuntu has it's own DNS service running on port 53.
+* Install the desired ad-blocking addon and notice that after starting it there are errors related to 'address/port is already in use' in the logs. This is because Ubuntu has it's own DNS service running on port 53.
 
-* Run the following commands in the Ubuntu host's terminal to disable it so the addon will be able to start successfully.
+* Run the following commands in the Ubuntu host's terminal to disable its DNS service so the addon will be able to start successfully.
 
 ```bash
 # Get a root shell.
