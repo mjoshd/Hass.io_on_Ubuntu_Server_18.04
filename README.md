@@ -18,22 +18,20 @@ Create 2-3 snapshots of your current Hass.io installation.
 # Get a root shell.
 sudo -s
 
-# Display timezone list
+# Display timezone list and find your timezone in the list.
 timedatectl list-timezones
 
-# Find your timezone in the list
+# Apply timezone settings, replacing YOUR_TIMEZONE with one from the list.
+timedatectl set-timezone YOUR_TIMEZONE
 
-# Apply your timezone settings
-timedatectl set-timezone America/Detroit
-
-# Verify timezone settings
-timedatectl 
+# Verify timezone settings.
+timedatectl
 
 ```
 
 ## Set up a static IP
 
-* It is preferable to set a static IP duirng the OS installation. Use the information below if you need to create it afterward. 
+* It is preferable to set a static IP duirng the OS installation. Use the information below if you need to create it afterward.
 
 Determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example provided.
 
