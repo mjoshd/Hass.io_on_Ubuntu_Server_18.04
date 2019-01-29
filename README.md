@@ -103,7 +103,7 @@ echo '{"dns": ["GATEWAY_IP", "1.1.1.1", "9.9.9.9", "8.8.8.8"]}' > /etc/docker/da
 # Install Docker.
 curl -sSL https://get.docker.com | sh
 
-# Install Hass.io
+# Install Hass.io.
 curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install" | bash -s
 ```
 
@@ -133,7 +133,7 @@ If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-ho
 
 ```bash
 # Get a root shell.
-sudo -s
+sudo -i
 
 # Disable systemd-resolved.service from auto-starting.
 systemctl disable systemd-resolved.service
