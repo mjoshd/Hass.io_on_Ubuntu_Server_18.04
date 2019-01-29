@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Create a snapshot of your current Hass.io installation.
+Create 2-3 snapshots of your current Hass.io installation.
 
 ## Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
 
@@ -45,8 +45,9 @@ network:
             nameservers:
                 addresses:
                 - GATEWAY_IP
-                - 8.8.8.8
+                - 1.1.1.1
                 - 9.9.9.9
+                - 8.8.8.8
     version: 2
 
 ```
@@ -67,35 +68,51 @@ Once logged in to the machine, open a terminal and run the following commands.
 
 ```bash
 # Get a root shell.
-sudo -s
+sudo -i
 
-# Add the universe repository and update.
-add-apt-repository universe && apt-get update
-
-# Install docker.io, avahi-daemon, and jq.
-#   -y switch used to auto-accept, can be ommited if desired.
-apt-get install docker.io avahi-daemon jq -y
-
-# Create DNS configuration file for Docker.
-nano /etc/docker/daemon.json
-
-# Enter the following into daemon.json, where GATEWAY_IP is your default gateway, then save.
-{
-    "dns": ["GATEWAY_IP", "8.8.8.8", "9.9.9.9"]
-}
+# Add the universe repository.
+add-apt-repository universe
 
 # Update package lists and upgrade existing packages.
-#   -y switch used to auto-accept, can be ommited if desired.
 apt-get update && apt-get upgrade -y
 
-# Download hassio_install script from github, and automatically execute it in a bash shell.
-# You can navigate to this url in a web browser if you'd like to examine the script before running.
-curl -sL https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install | bash
+# Install required software.
+apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
+
+# Create DNS configuration file for Docker where GATEWAY_IP is your default gateway.
+mkdir -p /etc/docker
+echo '{"dns": ["GATEWAY_IP", "1.1.1.1", "9.9.9.9", "8.8.8.8"]}' > /etc/docker/daemon.json
+
+# Install Docker.
+curl -sSL https://get.docker.com | sh
+
+# Install Hass.io
+curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install" | bash -s
 ```
+
+## Finishing Up
+
+* Install either the Samba addon or the community IDE addon.
+
+* Configure, start, and open the chosen addon.
+
+* Use the addon to upload the largest snapshot to the "backup" directory.
+
+* Open the side-menu then click Hass.io > Snapshots.
+
+* Click the Reload icon in the upper-right corner of the pane.
+
+* Click the desired snapshot, ensure all boxes are selected, then click 'WIPE & RESTORE'.
+
+* After it is complete, log in and verify everything is working.
 
 ## Important Note
 
-If you are going to install either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) you will need to run the following commands in the Ubuntu host's terminal or you will get errors related to 'address/port is already in use' when trying to start it:
+If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) follow these steps in order:
+
+* Install the desired ad-blocking addon and note that after starting it there are errors related to 'address/port is already in use'. This is because Ubuntu has it's own DNS service running on port 53.
+
+* Run the following commands in the Ubuntu host's terminal to disable it so the addon will be able to start successfully.
 
 ```bash
 # Get a root shell.
@@ -107,19 +124,3 @@ systemctl disable systemd-resolved.service
 # Reboot the host.
 reboot now
 ```
-
-## Finishing Up
-
-* Install either the Samba addon or the community IDE addon.
-
-* Configure, start, and open the chosen addon.
-
-* Use the addon to upload the snapshot to the "backup" directory.
-
-* Open the side-menu then click Hass.io > Snapshots.
-
-* Click the Reload icon in the upper-right corner of the pane.
-
-* Click the desired snapshot, de-select Home Assistant (leave all other items selected), then click 'RESTORE SELECTED'.
-
-* After it is complete, log in and verify everything is working.
