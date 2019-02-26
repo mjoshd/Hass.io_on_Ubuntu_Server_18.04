@@ -4,7 +4,7 @@
 
 Create 2-3 snapshots of your current Hass.io installation.
 
-## Install [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server)
+## Install [Ubuntu Server 18.04 LTS](https://www.ubuntu.com/download/server)
 
 * For instructions on how to install Ubuntu Server, [see Canonicals documentation here.](https://tutorials.ubuntu.com/tutorial/tutorial-install-ubuntu-server#0)
 * For instructions on how to make a installable USB key, see:
