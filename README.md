@@ -15,14 +15,11 @@ Create 2-3 snapshots of your current Hass.io installation.
 ## Set the system timezone
 
 ```bash
-# Get a root shell.
-sudo -i
-
 # Display timezone list and find your timezone in the list.
 timedatectl list-timezones
 
 # Apply timezone settings, replacing YOUR_TIMEZONE with one from the list.
-timedatectl set-timezone YOUR_TIMEZONE
+sudo timedatectl set-timezone YOUR_TIMEZONE
 
 # Verify timezone settings.
 timedatectl
@@ -132,12 +129,9 @@ If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-ho
 * Run the following commands in the Ubuntu host's terminal to disable its DNS service so the addon will be able to start successfully.
 
 ```bash
-# Get a root shell.
-sudo -i
-
 # Disable systemd-resolved.service from auto-starting.
-systemctl disable systemd-resolved.service
+sudo systemctl disable systemd-resolved.service
 
 # Reboot the host.
-reboot now
+sudo reboot now
 ```
