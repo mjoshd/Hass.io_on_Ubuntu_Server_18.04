@@ -18,8 +18,8 @@ Create 2-3 snapshots of your current Hass.io installation.
 # Display timezone list and find your timezone in the list.
 timedatectl list-timezones
 
-# Apply timezone settings, replacing YOUR_TIMEZONE with one from the list.
-sudo timedatectl set-timezone YOUR_TIMEZONE
+# Apply timezone settings, replacing <YOUR_TIMEZONE> with one from the list.
+sudo timedatectl set-timezone <YOUR_TIMEZONE>
 
 # Verify timezone settings.
 timedatectl
@@ -41,7 +41,7 @@ sudo nano /etc/netplan/50-cloud-init.yaml
 
 ```
 
-Replace INTERFACE, IP_ADDRESS, CIDR_MASK and GATEWAY_IP with your details.
+Replace <INTERFACE>, <IP_ADDRESS>, <CIDR_MASK> and <GATEWAY_IP> with your details.
 
 ```yaml
 # This file is generated from information provided by
@@ -51,14 +51,14 @@ Replace INTERFACE, IP_ADDRESS, CIDR_MASK and GATEWAY_IP with your details.
 # network: {config: disabled}
 network:
     ethernets:
-        INTERFACE:
+        <INTERFACE>:
             addresses:
-            - IP_ADDRESS/CIDR_MASK
+            - <IP_ADDRESS>/<CIDR_MASK>
             dhcp4: false
-            gateway4: GATEWAY_IP
+            gateway4: <GATEWAY_IP>
             nameservers:
                 addresses:
-                - GATEWAY_IP
+                - <GATEWAY_IP>
                 - 1.1.1.1
                 - 9.9.9.9
                 - 8.8.8.8
@@ -84,6 +84,9 @@ Once logged in to the machine, open a terminal and run the following commands.
 # Get a root shell.
 sudo -i
 
+# Add software-properties-common
+apt-get install software-properties-common
+
 # Add the universe repository.
 add-apt-repository universe
 
@@ -91,17 +94,17 @@ add-apt-repository universe
 apt-get update && apt-get upgrade -y
 
 # Install required software.
-apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat software-properties-common
+apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
 
-# Create DNS configuration file for Docker where GATEWAY_IP is your default gateway.
+# Create DNS configuration file for Docker where <GATEWAY_IP> is your default gateway.
 mkdir -p /etc/docker
-echo '{"dns": ["GATEWAY_IP", "1.1.1.1", "9.9.9.9", "8.8.8.8"]}' > /etc/docker/daemon.json
+echo '{"dns": ["<GATEWAY_IP>", "1.1.1.1", "9.9.9.9", "8.8.8.8"]}' > /etc/docker/daemon.json
 
 # Install Docker.
-curl -sSL https://get.docker.com | sh
+curl -fsSL get.docker.com | sh
 
 # Install Hass.io.
-curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-build/master/install/hassio_install" | bash -s
+curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
 ```
 
 ## Finishing Up
