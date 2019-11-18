@@ -12,22 +12,22 @@ Create a snapshot or two of your current Hass.io installation.
   * [macOS](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-macos#0)
   * [Ubuntu](https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-ubuntu#0)
 
-## Set the system timezone
+## Set the system time-zone
 
 ```bash
-# Select your Country and Time Zone via the wizard.
+# Select your Country and Reigon via the config flow.
 sudo dpkg-reconfigure tzdata
 
-# Verify timezone settings.
+# Verify time-zone settings.
 timedatectl
 
 ```
 
 ## Set up a static IP
 
-It is preferable to set a static IP duirng the OS installation. If you have already done so then this section can be skipped
+It is preferable to set a static IP duirng the OS installation. If you have already done so then this section can be skipped.
 
-If you need to create a static IP configuration then use the provided information to determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example but using your details.
+If you need to create a static IP configuration then use the provided commands to determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example. Be sure to replace all PLACE_HOLDER variables with your information.
 
 ```bash
 # Display network interfaces.
@@ -115,7 +115,7 @@ curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/mast
 
 ## Important Note
 
-If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) follow these steps in order:
+If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-hole) then it is important to follow these steps in their given order; if you will not be using any DNS Ad-blocking addons then this section can be skipped:
 
 * Install the desired ad-blocking addon and notice that after starting it there are errors related to 'address/port is already in use' in the logs. This is because Ubuntu has it's own DNS service running on port 53.
 
