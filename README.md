@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Create 2-3 snapshots of your current Hass.io installation.
+Create a snapshot or two of your current Hass.io installation.
 
 ## Install [Ubuntu Server 18.04 LTS](https://www.ubuntu.com/download/server)
 
@@ -28,9 +28,9 @@ timedatectl
 
 ## Set up a static IP
 
-* It is preferable to set a static IP duirng the OS installation. Use the information below if you need to create it afterward.
+It is preferable to set a static IP duirng the OS installation. If you have already done so then this section can be skipped
 
-Determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example provided.
+If you need to create a static IP configuration then use the provided information to determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example but using your details.
 
 ```bash
 # Display network interfaces.
@@ -41,7 +41,7 @@ sudo nano /etc/netplan/50-cloud-init.yaml
 
 ```
 
-Replace <INTERFACE>, <IP_ADDRESS>, <CIDR_MASK> and <GATEWAY_IP> with your details.
+Replace INTERFACE, IP_ADDRESS, CIDR_MASK and GATEWAY_IP with your details.
 
 ```yaml
 # This file is generated from information provided by
@@ -51,14 +51,14 @@ Replace <INTERFACE>, <IP_ADDRESS>, <CIDR_MASK> and <GATEWAY_IP> with your detail
 # network: {config: disabled}
 network:
     ethernets:
-        <INTERFACE>:
+        INTERFACE:
             addresses:
-            - <IP_ADDRESS>/<CIDR_MASK>
+            - IP_ADDRESS/CIDR_MASK
             dhcp4: false
-            gateway4: <GATEWAY_IP>
+            gateway4: GATEWAY_IP
             nameservers:
                 addresses:
-                - <GATEWAY_IP>
+                - GATEWAY_IP
                 - 1.1.1.1
                 - 9.9.9.9
                 - 8.8.8.8
@@ -87,18 +87,11 @@ sudo -i
 # Add software-properties-common
 apt-get install software-properties-common
 
-# Add the universe repository.
-add-apt-repository universe
-
 # Update package lists and upgrade existing packages.
 apt-get update && apt-get upgrade -y
 
 # Install required software.
 apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
-
-# Create DNS configuration file for Docker where <GATEWAY_IP> is your default gateway.
-mkdir -p /etc/docker
-echo '{"dns": ["<GATEWAY_IP>", "1.1.1.1", "9.9.9.9", "8.8.8.8"]}' > /etc/docker/daemon.json
 
 # Install Docker.
 curl -fsSL get.docker.com | sh
@@ -132,6 +125,15 @@ If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-ho
 * Run the following commands in the Ubuntu host's terminal to disable its DNS service so the addon will be able to start successfully.
 
 ```bash
+# Determine the system's hostname.
+hostname
+
+# Open '/etc/hosts' for editing.
+sudo nano /etc/hosts
+
+# Add the following as the first line of the file, replacing YOUR_HOSTNAME with your system's hostname.
+127.0.0.1         YOUR_HOSTNAME
+
 # Disable systemd-resolved.service from auto-starting.
 sudo systemctl disable systemd-resolved.service
 
