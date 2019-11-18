@@ -15,11 +15,8 @@ Create a snapshot or two of your current Hass.io installation.
 ## Set the system timezone
 
 ```bash
-# Display timezone list and find your timezone in the list.
-timedatectl list-timezones
-
-# Apply timezone settings, replacing <YOUR_TIMEZONE> with one from the list.
-sudo timedatectl set-timezone <YOUR_TIMEZONE>
+# Select your Country and Time Zone via the wizard.
+sudo dpkg-reconfigure tzdata
 
 # Verify timezone settings.
 timedatectl
