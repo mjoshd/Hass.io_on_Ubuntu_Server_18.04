@@ -75,25 +75,22 @@ sudo reboot now
 
 ## [Installing Hass.io](https://www.home-assistant.io/hassio/installation/#alternative-install-on-generic-linux-server)
 
-Once logged in to the machine, open a terminal and run the following commands.
+Once logged in to the machine, open a terminal and run the following commands. These commands were recommended when this document was last edited. You are strongly encouraged to visit the Home Assistant website and use the most up-to-date commands found in the [official installation documentation](https://www.home-assistant.io/hassio/installation/#preparation).
 
 ```bash
-# Get a root shell.
 sudo -i
 
-# Add software-properties-common
-apt-get install software-properties-common
+add-apt-repository universe
 
-# Update package lists and upgrade existing packages.
-apt-get update && apt-get upgrade -y
+apt-get update
 
-# Install required software.
-apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
+apt-get install -y software-properties-common apparmor-utils apt-transport-https avahi-daemon ca-
+certificates curl dbus jq network-manager socat
 
-# Install Docker.
+systemctl disable ModemManager
+
 curl -fsSL get.docker.com | sh
 
-# Install Hass.io.
 curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
 ```
 
@@ -119,7 +116,7 @@ If you are going to use either of the DNS Ad-blocking addons (AdGuard Home/Pi-ho
 
 * Install the desired ad-blocking addon and notice that after starting it there are errors related to 'address/port is already in use' in the logs. This is because Ubuntu has it's own DNS service running on port 53.
 
-* Run the following commands in the Ubuntu host's terminal to disable its DNS service so the addon will be able to start successfully.
+* Run the following commands in the Ubuntu host's terminal to disable its DNS service so the addon will be able to start successfully.  
 
 ```bash
 # Determine the system's hostname.
@@ -135,5 +132,13 @@ sudo nano /etc/hosts
 sudo systemctl disable systemd-resolved.service
 
 # Reboot the host.
+sudo reboot now
+```
+
+If you decide to revert to not using either of the DNS Ad-blocking addons then you will need to re-enable systemd-resolved.service on the host then uninstall the addon from within Home Assistant.
+
+```bash
+sudo systemctl enable systemd-resolved.service
+
 sudo reboot now
 ```
