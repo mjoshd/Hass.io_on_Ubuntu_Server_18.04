@@ -82,9 +82,9 @@ sudo -i
 
 add-apt-repository universe
 
-apt-get update
+apt update && apt upgrade -y
 
-apt-get install -y software-properties-common apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
+apt install -y software-properties-common apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
 
 systemctl disable ModemManager
 
