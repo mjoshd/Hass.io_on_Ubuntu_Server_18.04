@@ -30,8 +30,8 @@ It is preferable to set a static IP duirng the OS installation. If you have alre
 If you need to create a static IP configuration then use the provided commands to determine the name of your network interface then reference the information below and alter the file to reflect similarly to the example. Be sure to replace all PLACE_HOLDER variables with your information.
 
 ```bash
-# Display network interfaces.
-ifconfig
+# Display network interface information.
+nmcli
 
 # Open network configuration file for editing.
 sudo nano /etc/netplan/50-cloud-init.yaml
@@ -84,14 +84,15 @@ add-apt-repository universe
 
 apt-get update
 
-apt-get install -y software-properties-common apparmor-utils apt-transport-https avahi-daemon ca-
-certificates curl dbus jq network-manager socat
+apt-get install -y software-properties-common apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus jq network-manager socat
 
 systemctl disable ModemManager
 
+systemctl stop ModemManager
+
 curl -fsSL get.docker.com | sh
 
-curl -sL "https://raw.githubusercontent.com/home-assistant/hassio-installer/master/hassio_install.sh" | bash -s
+curl -sL "https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh" | bash -s
 ```
 
 ## Finishing Up
